@@ -19,6 +19,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <Link href="/dashboard">Overview</Link>
             <Link href="/dashboard/projects">Projects</Link>
             <Link href="/dashboard/settings">Settings</Link>
+            <Link href="/">Home</Link>
           </nav>
           <button
             onClick={() => dispatch(logout())}
