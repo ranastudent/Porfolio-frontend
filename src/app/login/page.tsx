@@ -8,6 +8,7 @@ import { setCredentials } from "../../redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -34,6 +35,8 @@ export default function LoginPage() {
       toast.error(err?.data?.message || "Invalid email or password");
     }
   };
+
+  if(isLoading) return <Spinner />
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">

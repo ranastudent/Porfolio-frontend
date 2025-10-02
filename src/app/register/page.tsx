@@ -6,6 +6,8 @@ import { useRegisterUserMutation } from "../../redux/api/authApiSlice";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
+
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -27,6 +29,8 @@ export default function RegisterPage() {
       toast.error(err?.data?.message || "Failed to register");
     }
   };
+
+  if(isLoading) return <Spinner />
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
