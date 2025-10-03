@@ -5,18 +5,18 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
   Home,
-  Users,
   Settings,
   LogOut,
   Menu,
   X,
   LayoutDashboard,
+  MenuIcon,
 } from "lucide-react";
 
 const sidebarLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Users", href: "/dashboard/users", icon: Users },
+  { name: "About", href: "/dashboard/about", icon: MenuIcon },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 

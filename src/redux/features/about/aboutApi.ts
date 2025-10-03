@@ -13,27 +13,34 @@ export const aboutApi = apiSlice.injectEndpoints({
 
     // CREATE About (Admin Only)
     createAbout: builder.mutation({
-      query: (data) => {
-        const formData = new FormData();
-        formData.append("title", data.title);
-        formData.append("description", data.description);
-        if (data.image) formData.append("image", data.image);
-
-        return {
-          url: "/about",
-          method: "POST",
-          body: formData,
-        };
-      },
+      query: (data: {
+        name: string;
+        bio: string;
+        email: string;
+        contact?: string | null;
+        skills?: string[];
+        image?: string | null;
+      }) => ({
+        url: "/about",
+        method: "POST",
+        body: data, // send JSON directly
+      }),
       invalidatesTags: ["About"],
     }),
 
     // UPDATE About (Admin Only)
     updateAbout: builder.mutation({
-      query: (data) => ({
+      query: (data: {
+        name?: string;
+        bio?: string;
+        email?: string;
+        contact?: string | null;
+        skills?: string[];
+        image?: string | null;
+      }) => ({
         url: "/about",
         method: "PATCH",
-        body: data,
+        body: data, // JSON payload
       }),
       invalidatesTags: ["About"],
     }),

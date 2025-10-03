@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type Role = "admin" | "user" | "agent" | null;
+
 interface AuthState {
   token: string | null;
   user: any | null;
-  role: string | null;
-  hydrated: boolean; // ✅ mark when client-side has restored state
+  role: Role;
+  hydrated: boolean;
 }
 
 const initialState: AuthState = {
@@ -19,7 +21,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, action: PayloadAction<{ token: string; user: any; role: string }>) => {
+    setCredentials: (
+      state,
+      action: PayloadAction<{ token: string; user: any; role: Role }>
+    ) => {
       const { token, user, role } = action.payload;
       state.token = token;
       state.user = user;
@@ -28,7 +33,7 @@ const authSlice = createSlice({
       if (typeof window !== "undefined") {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("role", role);
+        if (role) localStorage.setItem("role", role);
       }
     },
     logout: (state) => {
@@ -46,12 +51,12 @@ const authSlice = createSlice({
       if (typeof window !== "undefined") {
         const token = localStorage.getItem("token");
         const user = localStorage.getItem("user");
-        const role = localStorage.getItem("role");
+        const role = localStorage.getItem("role") as Role;
 
         state.token = token;
         state.user = user ? JSON.parse(user) : null;
-        state.role = role;
-        state.hydrated = true; // ✅ mark done
+        state.role = role ?? null;
+        state.hydrated = true;
       }
     },
   },
