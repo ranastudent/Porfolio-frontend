@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Metadata } from "next";
+
 
 export const revalidate = 60; // ISR: Rebuild every 60s
 

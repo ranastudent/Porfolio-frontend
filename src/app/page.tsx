@@ -5,9 +5,17 @@ import BlogList from "@/components/BlogList";
 export default function HomePage() {
   return (
     <main>
-      <AboutMe />
-      <ProjectsShowcase />
-      <BlogList />
+      <section id="about">
+        <AboutMe />
+      </section>
+
+      <section id="projects">
+        <ProjectsShowcase />
+      </section>
+
+      <section id="blog">
+        <BlogList />
+      </section>
     </main>
   );
 }
