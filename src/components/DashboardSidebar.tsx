@@ -10,14 +10,12 @@ import {
   Menu,
   X,
   LayoutDashboard,
-  MenuIcon,
 } from "lucide-react";
 
 const sidebarLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "About", href: "/dashboard/about", icon: MenuIcon },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  { name: "Project Add", href: "/dashboard/project-add", icon: Settings },
 ];
 
 export default function DashboardSidebar() {

@@ -17,7 +17,6 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  // 🔹 Fix 3: Don't render anything until hydration is done
   if (!hydrated) return null;
 
   return (
@@ -28,14 +27,14 @@ export default function Navbar() {
           <Link href="/">Portfolio</Link>
         </div>
 
-        {/* Hamburger (mobile) */}
+        {/* Hamburger for mobile */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        {/* Nav links (desktop) */}
+        {/* Desktop links */}
         <div className="hidden md:flex space-x-6">
           <Link href="/#home" className="hover:text-blue-400 transition">Home</Link>
           <Link href="/#about" className="hover:text-blue-400 transition">About Me</Link>
@@ -45,11 +44,12 @@ export default function Navbar() {
           {user && (
             <>
               <Link href="/resume-builder" className="hover:text-blue-400 transition">Resume Builder</Link>
+
               {user.role === "ADMIN" && (
                 <>
                   <Link href="/dashboard" className="hover:text-blue-400 transition">Dashboard</Link>
-                  <Link href="/blog-management" className="hover:text-blue-400 transition">Blog Management</Link>
                   <Link href="/project-management" className="hover:text-blue-400 transition">Project Management</Link>
+                  <Link href="/manage-about" className="hover:text-blue-400 transition">Manage About</Link>
                 </>
               )}
             </>
@@ -67,6 +67,41 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {isOpen && (
+        <div className="md:hidden mt-4 flex flex-col space-y-3 bg-gray-800 rounded-lg p-4">
+          <Link href="/#home" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Home</Link>
+          <Link href="/#about" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>About Me</Link>
+          <Link href="/#projects" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Projects</Link>
+          <Link href="/#blog" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Blog</Link>
+
+          {user && (
+            <>
+              <Link href="/resume-builder" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Resume Builder</Link>
+
+              {user.role === "ADMIN" && (
+                <>
+                  <Link href="/dashboard" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Dashboard</Link>
+                  <Link href="/project-management" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Project Management</Link>
+                  <Link href="/manage-about" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Manage About</Link>
+                </>
+              )}
+            </>
+          )}
+
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/login" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Login</Link>
+          )}
+        </div>
+      )}
     </nav>
   );
 }

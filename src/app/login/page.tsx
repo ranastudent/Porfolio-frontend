@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import Spinner from "@/components/Spinner";
 
+
 export default function LoginPage() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -23,10 +24,14 @@ export default function LoginPage() {
     try {
       const res = await loginUser({ email, password }).unwrap();
 
-      dispatch(setCredentials({ token: res.token, user: res.user, role: res.user.role }));
+      // ✅ normalize role
+      const normalizedRole = res.user.role;
+
+      dispatch(setCredentials({ token: res.token, user: res.user, role: normalizedRole  }));
       toast.success("Login successful!");
 
-      if (res.user.role === "ADMIN") {
+      // ✅ consistent navigation
+      if (normalizedRole === "ADMIN") {
         router.push("/dashboard");
       } else {
         router.push("/");
@@ -36,7 +41,7 @@ export default function LoginPage() {
     }
   };
 
-  if(isLoading) return <Spinner />
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -74,7 +79,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Switch to Register */}
         <p className="text-sm text-center mt-4">
           Not registered yet?{" "}
           <Link href="/register" className="text-blue-600 hover:underline">

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+
+
 type Role = "admin" | "user" | "agent" | null;
 
 interface AuthState {

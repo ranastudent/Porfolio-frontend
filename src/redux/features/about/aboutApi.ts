@@ -3,7 +3,8 @@ import { apiSlice } from "../../api/apiSlice";
 export const aboutApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // GET About (Public)
-    getAbout: builder.query({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getAbout: builder.query<any, void>({
       query: () => ({
         url: "/about",
         method: "GET",
@@ -11,7 +12,7 @@ export const aboutApi = apiSlice.injectEndpoints({
       providesTags: ["About"],
     }),
 
-    // CREATE About (Admin Only)
+    // CREATE About
     createAbout: builder.mutation({
       query: (data: {
         name: string;
@@ -23,12 +24,12 @@ export const aboutApi = apiSlice.injectEndpoints({
       }) => ({
         url: "/about",
         method: "POST",
-        body: data, // send JSON directly
+        body: data,
       }),
       invalidatesTags: ["About"],
     }),
 
-    // UPDATE About (Admin Only)
+    // UPDATE About
     updateAbout: builder.mutation({
       query: (data: {
         name?: string;
@@ -40,12 +41,12 @@ export const aboutApi = apiSlice.injectEndpoints({
       }) => ({
         url: "/about",
         method: "PATCH",
-        body: data, // JSON payload
+        body: data,
       }),
       invalidatesTags: ["About"],
     }),
 
-    // DELETE About (Admin Only)
+    // DELETE About
     deleteAbout: builder.mutation({
       query: () => ({
         url: "/about",
