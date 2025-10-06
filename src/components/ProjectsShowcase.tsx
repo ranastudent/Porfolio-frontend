@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import ConfirmModal from "./ConfirmModal";
@@ -15,19 +14,15 @@ export default function ProjectsShowcase() {
   const { role } = useSelector((state: RootState) => state.auth);
   const [projects, setProjects] = useState<any[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    null
-  );
-
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [deleteProject] = useDeleteProjectMutation();
 
   // Fetch projects
   const fetchProjects = async () => {
     try {
-      const res = await fetch(
-        "https://portfolio-backend-kuda.onrender.com/api/projects",
-        { next: { revalidate: 60 } }
-      );
+      const res = await fetch("https://portfolio-backend-kuda.onrender.com/api/projects", {
+        next: { revalidate: 60 },
+      });
       const data = await res.json();
       setProjects(data);
     } catch (error) {
@@ -52,13 +47,9 @@ export default function ProjectsShowcase() {
     }
   };
 
-  // Helper to get safe thumbnail URL
   const getThumbnailUrl = (thumbnail: string | null | undefined) => {
     if (!thumbnail) return null;
-
     if (thumbnail.startsWith("http")) return thumbnail;
-
-    // Backend image path
     return `https://portfolio-backend-kuda.onrender.com/uploads/${thumbnail}`;
   };
 
@@ -66,49 +57,47 @@ export default function ProjectsShowcase() {
     <section className="py-12 px-6">
       <h2 className="text-2xl font-bold mb-6 text-center">Projects Showcase</h2>
 
-      <div className="grid md:grid-cols-3 gap-6 sm:grid-cols-1">
+      <div className="grid md:grid-cols-3 gap-8 sm:grid-cols-1">
         {projects.map((project) => {
           const thumbnailUrl = getThumbnailUrl(project.thumbnail);
 
           return (
             <div
               key={project.id}
-              className="p-4 border rounded-lg shadow-md bg-white flex flex-col"
+              className="p-4 border rounded-lg shadow-md bg-white flex flex-col hover:shadow-lg transition"
             >
               {/* Thumbnail */}
               {thumbnailUrl ? (
-                <div className="relative w-full h-48 mb-4">
+                <div className="w-full h-60 mb-5">
                   <img
-                    src={project.thumbnail || "/placeholder.png"}
+                    src={thumbnailUrl}
                     alt={project.title}
-                    className="object-cover w-full h-64 rounded"
+                    className="object-cover w-full h-full rounded-md"
                   />
                 </div>
               ) : (
-                <div className="w-full h-48 mb-4 bg-gray-200 flex items-center justify-center rounded text-gray-500">
+                <div className="w-full h-60 mb-5 bg-gray-200 flex items-center justify-center rounded text-gray-500">
                   No Image
                 </div>
               )}
 
               {/* Title + Description */}
               <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-              <p className="text-gray-600 mb-3 line-clamp-3">
+              <p className="text-gray-600 mb-4 line-clamp-3">
                 {project.description}
               </p>
 
               {/* Features */}
               {project.features?.length > 0 && (
-                <ul className="list-disc list-inside mb-3 text-sm text-gray-700">
-                  {project.features
-                    .slice(0, 4)
-                    .map((f: string, idx: number) => (
-                      <li key={idx}>{f}</li>
-                    ))}
+                <ul className="list-disc list-inside mb-4 text-sm text-gray-700">
+                  {project.features.slice(0, 3).map((f: string, idx: number) => (
+                    <li key={idx}>{f}</li>
+                  ))}
                 </ul>
               )}
 
               {/* Links */}
-              <div className="mt-auto flex gap-3 mb-2">
+              <div className="mt-auto flex gap-3 mb-3">
                 {project.repoLink && (
                   <Link
                     href={project.repoLink}

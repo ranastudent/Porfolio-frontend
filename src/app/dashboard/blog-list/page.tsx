@@ -1,4 +1,4 @@
-import BlogList from "@/components/BlogList";
+import BlogList from "@/components/BlogListDashboard";
 
 // ISR: rebuild every 60 seconds
 export const revalidate = 60;

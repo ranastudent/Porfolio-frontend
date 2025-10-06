@@ -16,7 +16,7 @@ export default function BlogList({ blogs }: { blogs: any[] }) {
         {blogs.map((blog: any) => (
           <Link
             key={blog.id}
-            href={`/blog/${blog.id}`}
+            href={`/`}
             className="block border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
           >
             <div className="w-full h-52 bg-gray-100 overflow-hidden">
@@ -41,7 +41,7 @@ export default function BlogList({ blogs }: { blogs: any[] }) {
 
       <div className="text-center mt-10">
         <Link
-          href="/blog"
+          href="/"
           className="inline-block px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
         >
           View All Blogs

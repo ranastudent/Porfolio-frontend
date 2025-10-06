@@ -50,6 +50,7 @@ export default function Navbar() {
                   <Link href="/dashboard" className="hover:text-blue-400 transition">Dashboard</Link>
                   <Link href="/project-management" className="hover:text-blue-400 transition">Project Management</Link>
                   <Link href="/manage-about" className="hover:text-blue-400 transition">Manage About</Link>
+                 
                 </>
               )}
             </>
@@ -85,6 +86,7 @@ export default function Navbar() {
                   <Link href="/dashboard" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Dashboard</Link>
                   <Link href="/project-management" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Project Management</Link>
                   <Link href="/manage-about" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Manage About</Link>
+                  
                 </>
               )}
             </>

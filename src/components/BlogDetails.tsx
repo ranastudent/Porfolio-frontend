@@ -1,54 +1,33 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-
-interface Blog {
-  id: string;
-  title: string;
-  author: string;
-  date: string;
-  content: string;
-}
-
-export default function BlogDetails() {
-  const { id } = useParams(); // e.g. /blogs/123
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchBlog = async () => {
-      try {
-        // replace with your backend API endpoint
-        const res = await fetch(`/api/blogs/${id}`);
-        if (!res.ok) throw new Error("Failed to fetch blog");
-
-        const data = await res.json();
-        setBlog(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlog();
-  }, [id]);
-
-  if (loading) return <p className="p-6">Loading blog...</p>;
-  if (!blog) return <p className="p-6 text-red-500">Blog not found.</p>;
-
+export default function BlogDetails({ blog }: { blog: any }) {
   return (
-    <article className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
-      <div className="text-gray-500 mb-6">
-        By {blog.author} • {new Date(blog.date).toLocaleDateString()}
-      </div>
-      <div className="prose prose-lg">
-        {blog.content}
-      </div>
-    </article>
+    <section className="container mx-auto px-4 py-10">
+      <h1 className="text-3xl font-bold mt-10 mb-6">{blog.title}</h1>
+
+      {blog.image && (
+        <div className="w-full h-64 mb-6 overflow-hidden rounded-lg">
+          <img
+            src={blog.image}
+            alt={blog.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      <p className="text-gray-700 mb-4">{blog.description}</p>
+
+      <div
+        className="prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: blog.content }}
+      />
+
+      <p className="mt-6 text-sm text-gray-500">
+        ✍️ {blog.author?.name || "Unknown"} |{" "}
+        {new Date(blog.createdAt).toLocaleDateString()}
+      </p>
+    </section>
   );
 }

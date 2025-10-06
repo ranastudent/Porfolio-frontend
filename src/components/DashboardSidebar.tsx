@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "@/redux/features/authSlice"; // your authSlice logout
 import {
   Home,
   Settings,
@@ -16,11 +19,21 @@ const sidebarLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Project Add", href: "/dashboard/project-add", icon: Settings },
+  { name: "Blog Add", href: "/dashboard/blog-management", icon: Settings },
+  { name: "Blog List", href: "/dashboard/blog-list", icon: Settings },
+  { name: "Blog Edit", href: "/dashboard/blog-update", icon: Settings },
 ];
 
 export default function DashboardSidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logoutAction()); // clear redux auth state
+    router.push("/login"); // redirect to login
+  };
 
   return (
     <>
@@ -58,7 +71,10 @@ export default function DashboardSidebar() {
         </nav>
 
         <div className="p-2 border-t border-gray-800">
-          <button className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-sm hover:bg-gray-800">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-sm hover:bg-gray-800"
+          >
             <LogOut className="h-4 w-4" />
             {isOpen && <span>Logout</span>}
           </button>
@@ -107,7 +123,10 @@ export default function DashboardSidebar() {
         </nav>
 
         <div className="p-2 border-t border-gray-800">
-          <button className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-sm hover:bg-gray-800">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-sm hover:bg-gray-800"
+          >
             <LogOut className="h-4 w-4" />
             <span>Logout</span>
           </button>
