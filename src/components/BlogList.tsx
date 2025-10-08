@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -20,15 +20,7 @@ export default function BlogList({ blogs }: { blogs: any[] }) {
             className="block border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
           >
             <div className="w-full h-52 bg-gray-100 overflow-hidden">
-              <img
-                src={
-                  blog.image && blog.image.trim() !== ""
-                    ? blog.image
-                    : "https://placehold.co/600x400?text=No+Image+Available"
-                }
-                alt={blog.title}
-                className="w-full h-full object-cover"
-              />
+             
             </div>
             <div className="p-4">
               <h3 className="text-lg font-semibold text-gray-800 hover:text-blue-600">

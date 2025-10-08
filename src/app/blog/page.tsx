@@ -4,12 +4,18 @@ import BlogList from "@/components/BlogList";
 export const revalidate = 60;
 
 async function getAllBlogs() {
-  const res = await fetch("https://portfolio-backend-kuda.onrender.com/api/blogs", {
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) return [];
-  return res.json();
+  try {
+    const res = await fetch("https://portfolio-backend-kuda.onrender.com/api/blogs", {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (error) {
+    console.error("Blog fetch failed:", error);
+    return [];
+  }
 }
+
 
 export default async function AllBlogsPage() {
   const blogs = await getAllBlogs();

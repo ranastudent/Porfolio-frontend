@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 
-type Role = "admin" | "user" | "agent" | null;
+type Role = "ADMIN" | "USER" | "AGENT" | null;
 
 interface AuthState {
   token: string | null;
